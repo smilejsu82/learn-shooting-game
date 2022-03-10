@@ -8,6 +8,11 @@ public class PlayerController : MonoBehaviour
     private bool isTouchLeft;
     private bool isTouchRight;
 
+    public int power;
+
+    public GameObject playerBulletAPrefab;
+    public GameObject playerBulletBPrefab;
+
     Animator anim;
 
     private void Start()
@@ -38,6 +43,29 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
         {
             this.anim.SetInteger("Input", (int)h);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            Vector3 offsetY = Vector3.up * 0.7f;
+
+            switch (power)
+            {
+                case 1:
+                    Instantiate(this.playerBulletAPrefab, this.transform.position + Vector3.up * 0.7f, this.transform.rotation);
+                    break;
+
+                case 2:
+                    Instantiate(this.playerBulletAPrefab, this.transform.position + offsetY + (Vector3.left * 0.2f), this.transform.rotation);
+                    Instantiate(this.playerBulletAPrefab, this.transform.position + offsetY + (Vector3.right * 0.2f), this.transform.rotation);
+                    break;
+
+                case 3:
+                    Instantiate(this.playerBulletAPrefab, this.transform.position + offsetY + (Vector3.left * 0.3f), this.transform.rotation);
+                    Instantiate(this.playerBulletBPrefab, this.transform.position + offsetY, this.transform.rotation);
+                    Instantiate(this.playerBulletAPrefab, this.transform.position + offsetY + (Vector3.right * 0.3f), this.transform.rotation);
+                    break;
+            }
         }
     }
 
